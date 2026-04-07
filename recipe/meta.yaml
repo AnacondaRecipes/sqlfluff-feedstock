@@ -15,8 +15,6 @@ build:
     - sqlfluff = sqlfluff.cli.commands:cli
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<39]
-  # No diff-cover >2.5 for py>312
-  skip: true  # [py>312]
 
 requirements:
   host:
