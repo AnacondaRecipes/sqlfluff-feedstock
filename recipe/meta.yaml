@@ -49,7 +49,7 @@ test:
   commands:
     - pip check
     - sqlfluff --help
-    - pytest -vvv test
+    - pytest -vvv test {{ deselect_tests }}
   requires:
     - pip
     - pytest
