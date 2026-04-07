@@ -1,19 +1,20 @@
 {% set name = "sqlfluff" %}
-{% set version = "3.0.7" %}
+{% set version = "4.1.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlfluff-{{ version }}.tar.gz
-  sha256: d49b52c4577ce113ef6318a933c7a7fedd25852dea5e9fe0981cf301c6b73927
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/sqlfluff-{{ version }}.tar.gz
+  sha256: 83dd4c081afb48c0af861833015a18b13d52726bfe52a286246dbd7a64b7d111
 
 build:
   number: 0
   entry_points:
     - sqlfluff = sqlfluff.cli.commands:cli
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv 
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -22,21 +23,23 @@ requirements:
     - wheel
     - setuptools >=40.8.0
   run:
-    - appdirs
+    - python
+    - platformdirs
     - chardet
-    - click
+    - click <8.4.0
     - colorama >=0.3
     - diff-cover >=2.5.0
-    - importlib-resources   # [py<39]
-    - jinja2
+    - jinja2  
     - pathspec
     - pytest
-    - python
     - pyyaml >=5.1
     - regex
     - tblib
     - toml   # [py<311]
     - tqdm
+
+# Error: fixture 'test_verbosity_level' not found
+{% set deselect_tests = " --deselect=test/testing_test.py::test_rules_test_case_has_variable_introspection" %}
 
 test:
   source_files:
@@ -46,13 +49,13 @@ test:
   commands:
     - pip check
     - sqlfluff --help
-    - pytest -vvv --capture=tee-sys -k "not test_helper_has_variable_introspection" test
+    - pytest -vvv test {{ deselect_tests }}
   requires:
     - pip
     - pytest
 
 about:
-  home: https://www.sqlfluff.com/
+  home: https://www.sqlfluff.com
   summary: The SQL Linter for Humans
   dev_url: https://github.com/sqlfluff/sqlfluff
   doc_url: https://docs.sqlfluff.com/en/stable/index.html
