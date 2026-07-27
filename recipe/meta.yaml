@@ -29,9 +29,8 @@ requirements:
     - click <8.4.0
     - colorama >=0.3
     - diff-cover >=2.5.0
-    - jinja2  
+    - jinja2
     - pathspec
-    - pytest
     - pyyaml >=5.1
     - regex
     - tblib
