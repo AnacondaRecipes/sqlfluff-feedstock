@@ -14,7 +14,7 @@ build:
   entry_points:
     - sqlfluff = sqlfluff.cli.commands:cli
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<31-]
 
 requirements:
   host:
