@@ -1,20 +1,20 @@
 {% set name = "sqlfluff" %}
-{% set version = "4.1.0" %}
+{% set version = "4.2.2" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/sqlfluff-{{ version }}.tar.gz
-  sha256: 83dd4c081afb48c0af861833015a18b13d52726bfe52a286246dbd7a64b7d111
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0ee2bcd5d704d0bef56bf80b8f0da9b519ab3e9e0bb1d5e6e4b7e3944d3f5606
 
 build:
   number: 0
   entry_points:
     - sqlfluff = sqlfluff.cli.commands:cli
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -29,14 +29,16 @@ requirements:
     - click <8.4.0
     - colorama >=0.3
     - diff-cover >=2.5.0
-    - jinja2  
+    - jinja2
     - pathspec
-    - pytest
     - pyyaml >=5.1
     - regex
     - tblib
     - toml   # [py<311]
     - tqdm
+  run_constrained:
+    # rs
+    - sqlfluffrs ==4.2.2
 
 # Error: fixture 'test_verbosity_level' not found
 {% set deselect_tests = " --deselect=test/testing_test.py::test_rules_test_case_has_variable_introspection" %}
