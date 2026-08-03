@@ -10,7 +10,7 @@ source:
   sha256: 0ee2bcd5d704d0bef56bf80b8f0da9b519ab3e9e0bb1d5e6e4b7e3944d3f5606
 
 build:
-  number: 0
+  number: 1
   entry_points:
     - sqlfluff = sqlfluff.cli.commands:cli
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -34,7 +34,7 @@ requirements:
     - pyyaml >=5.1
     - regex
     - tblib
-    - toml   # [py<311]
+    - tomli   # [py<311]
     - tqdm
   run_constrained:
     # rs
